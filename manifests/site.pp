@@ -44,17 +44,7 @@ ini_setting { 'random ordering':
   # This is where you can declare classes for all nodes.
   # Example:
   #   class { 'my_class': }
-  notify { "Hello, my name is ${::hostname}": }
-  notify { "Ping!": }
-
-  host { 'testing.puppetlabs.vm':
-    host_aliases => 'testing.puppetlabs.vm',
-    ip => '127.0.0.1'
-  }
-
-  exec { 'cowsay':
-    command => "cowsay 'Welcome to ${::fqdn}!' > /etc/motd",
-    path => "/usr/local/bin"
-  }
+node default {
+}
 
 # Testing Travis
