@@ -49,4 +49,9 @@ node default {
     group => 'root',
     mode => '0644'
   }
+  
+  host {
+    host_aliases => ' testing.puppetlabs.vm',
+    ip => '127.0.0.1'
+  }
 }
