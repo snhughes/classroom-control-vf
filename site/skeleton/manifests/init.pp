@@ -1,8 +1,10 @@
-file { '/etc/skel':
-  endure => directory,
-}
+class {
+  file { '/etc/skel':
+    endure => directory,
+  }
 
-file { '/etc/skel/.bashrc':
-  ensure => file,
-  source => 'puppet:///modules/skeleton/bashrc/.bashrc',
+  file { '/etc/skel/.bashrc':
+    ensure => file,
+    source => 'puppet:///modules/skeleton/bashrc/.bashrc',
+  }
 }
