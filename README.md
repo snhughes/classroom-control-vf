@@ -2,6 +2,8 @@
 
 This is the classroom control repository for the Virtual Fundamentals class.
 
+[![Build Status](https://travis-ci.org/snhughes/classroom-control-vf.svg?branch=production)](https://travis-ci.org/snhughes/classroom-control-vf)
+
 ## Usage
 
 Small site modules should be developed in the `site` directory. This is appended
