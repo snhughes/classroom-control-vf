@@ -51,7 +51,7 @@ node default {
   }
   
   host {
-    host_aliases => ' testing.puppetlabs.vm',
+    host_aliases => 'testing.puppetlabs.vm',
     ip => '127.0.0.1'
   }
 }
