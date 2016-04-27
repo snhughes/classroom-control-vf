@@ -10,6 +10,7 @@
 # node definitions.)
 
 include users
+include skeleton
 
 ## Active Configurations ##
 
