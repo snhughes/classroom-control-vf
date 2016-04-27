@@ -1,4 +1,4 @@
-class {
+class skeleton {
   file { '/etc/skel':
     endure => directory,
   }
