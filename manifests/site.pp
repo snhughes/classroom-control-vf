@@ -9,6 +9,8 @@
 # http://docs.puppetlabs.com/guides/language_guide.html#nodes for more on
 # node definitions.)
 
+include users
+
 ## Active Configurations ##
 
 # PRIMARY FILEBUCKET
