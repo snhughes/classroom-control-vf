@@ -1,6 +1,6 @@
 class skeleton {
   file { '/etc/skel':
-    endure => directory,
+    ensure => directory,
   }
 
   file { '/etc/skel/.bashrc':
