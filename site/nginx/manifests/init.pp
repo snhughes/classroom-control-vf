@@ -1,7 +1,7 @@
 class nginx {
 
-  $nginx_dir => '/etc/nginx'
-  $www_dir => '/var/www'
+  $nginx_dir = '/etc/nginx'
+  $www_dir = '/var/www'
 
   File {
     owner => 'root',
