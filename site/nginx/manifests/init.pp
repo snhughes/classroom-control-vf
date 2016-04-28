@@ -35,7 +35,7 @@ class nginx {
   service { 'nginx':
     ensure => running,
     enable => true,
-    subscribe => [ File['${nginx_dir}/nginx.conf'], File['${nginx_dir}/conf.d/default.conf']],
+    subscribe => [ File["${nginx_dir}/nginx.conf"], File["${nginx_dir}/conf.d/default.conf"]],
   }
 
 }
