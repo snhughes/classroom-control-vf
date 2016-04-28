@@ -47,4 +47,8 @@ ini_setting { 'random ordering':
 node default {
 }
 
+if $is_virtual == true {
+  notify {"It's a vm!":}
+}
+
 # Testing Travis
