@@ -12,7 +12,7 @@ class nginx {
     ensure => file,
   }
 
-  file { '/etc/nginx/conf.d/nginx.conf':
+  file { '/etc/nginx/nginx.conf':
     ensure => file,
     source => 'puppet:///modules/nginx/nginx.conf',
     require => Package['nginx'],
