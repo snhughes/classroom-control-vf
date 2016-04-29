@@ -10,7 +10,6 @@
 # node definitions.)
 
 include skeleton
-include nginx
 
 ## Active Configurations ##
 
