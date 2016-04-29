@@ -1,41 +1,67 @@
 class nginx {
 
-  $nginx_dir = '/etc/nginx'
-  $www_dir = '/var/www'
+  case $::osfamily {
+    'redhat' : {
+        $config_dir = '/etc/nginx'
+        $doc_root = '/var/www'
+        $file_owner = 'root'
+        $file_group = 'root' 
+        $package_name = 'nginx'
+        $server_block_dir = "${config_dir}/conf.d"
+        $logs_dir = '/var/log/nginx'
+        $service_name = 'nginx'
+        $service_user = $::osfamily ? {
+                            'redhat' => 'nginx',
+                            'debian' => 'www-data',
+                            }
+        }
+    'windows' : {
+        $config_dir = 'C:/ProgramData/nginx'
+        $doc_root = 'C:/ProgramData/nginx/html'
+        $file_owner = 'Administrator'
+        $file_group = 'Administrator'
+        $package_name = 'nginx-service'
+        $server_block_dir = "${config_dir}/conf.d"
+        $logs_dir = '${config_dir}/logs'
+        $service_name = 'nginx'
+        $service_user = 'nobody'
+        }
+  }
+    
 
   File {
-    owner => 'root',
-    group => 'root',
+    owner => $file_owner,
+    group => $file_group,
     mode => '0644',
   }
 
-  package { 'nginx':
+  package { $package_name :
     ensure => present,
-    before => [ File['/etc/nginx/nginx.conf'], File['/etc/nginx/conf.d/default.conf'] ],
+    before => [ File["${config_dir}/nginx.conf"], File["${server_block_dir}/default.conf"] ],
   }
 
-  file { "$www_dir":
+  file { "${doc_root}":
     ensure => directory,
   }
 
-  file { "$www_dir/index.html":
+  file { "${doc_root}/index.html":
     ensure => file,
   }
 
-  file { "${nginx_dir}/nginx.conf":
+  file { "${config_dir}/nginx.conf":
     ensure => file,
     source => 'puppet:///modules/nginx/nginx.conf',
   }
 
-  file { "${nginx_dir}/conf.d/default.conf":
+  file { "${server_block_dir}/conf.d/default.conf":
     ensure => file,
     source => 'puppet:///modules/nginx/default.conf',
   }
 
-  service { 'nginx':
+  service { $service_name:
     ensure => running,
     enable => true,
-    subscribe => [ File["${nginx_dir}/nginx.conf"], File["${nginx_dir}/conf.d/default.conf"]],
+    subscribe => [ File["${config_dir}/nginx.conf"], File["${config_dir}/conf.d/default.conf"]],
   }
 
 }
