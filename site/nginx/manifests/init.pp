@@ -1,4 +1,6 @@
-class nginx {
+class nginx (
+  $root
+){
 
   case $::osfamily {
     'redhat' : {
@@ -12,7 +14,7 @@ class nginx {
         $service_name = 'nginx'
         $service_user = $::osfamily ? {
                             'redhat' => 'nginx',
-                            'debian' => 'www-data',
+                            'debian' => 'www-data'
                             }
         }
     'windows' : {
@@ -25,6 +27,9 @@ class nginx {
         $logs_dir = '${config_dir}/logs'
         $service_name = 'nginx'
         $service_user = 'nobody'
+        }
+    default : {
+        fail ("OS ${OperatingSystem} not recognised.")
         }
   }
     
@@ -50,12 +55,12 @@ class nginx {
 
   file { "${config_dir}/nginx.conf":
     ensure => file,
-    source => 'puppet:///modules/nginx/nginx.conf',
+    source => template('nginx/nginx.conf.erb'),
   }
 
   file { "${server_block_dir}/conf.d/default.conf":
     ensure => file,
-    source => 'puppet:///modules/nginx/default.conf',
+    source => template('nginx/default.conf.erb'),
   }
 
   service { $service_name:
