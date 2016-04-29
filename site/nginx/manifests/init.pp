@@ -1,38 +1,15 @@
 class nginx (
-  $root
-){
-
-  case $::osfamily {
-    'redhat' : {
-        $config_dir = '/etc/nginx'
-        $doc_root = '/var/www'
-        $file_owner = 'root'
-        $file_group = 'root' 
-        $package_name = 'nginx'
-        $server_block_dir = "${config_dir}/conf.d"
-        $logs_dir = '/var/log/nginx'
-        $service_name = 'nginx'
-        $service_user = $::osfamily ? {
-                            'redhat' => 'nginx',
-                            'debian' => 'www-data'
-                            }
-        }
-    'windows' : {
-        $config_dir = 'C:/ProgramData/nginx'
-        $doc_root = 'C:/ProgramData/nginx/html'
-        $file_owner = 'Administrator'
-        $file_group = 'Administrator'
-        $package_name = 'nginx-service'
-        $server_block_dir = "${config_dir}/conf.d"
-        $logs_dir = '${config_dir}/logs'
-        $service_name = 'nginx'
-        $service_user = 'nobody'
-        }
-    default : {
-        fail ("OS ${OperatingSystem} not recognised.")
-        }
-  }
-    
+  $root,
+  $config_dir = $nginx::params::config_dir,
+  $doc_root = $nginx::params::doc_root,
+  $file_owner = $nginx::params::file_owner,
+  $file_group = $nginx::params::file_group,
+  $package_name = $nginx::params::package_name,
+  $server_block_dir = $nginx::params::server_block_dir,
+  $logs_dir = $nginx::params::logs_dir,
+  $service_name = $nginx::params::service_name,
+  $service_user = $nginx::params::service_user,
+) inherits nginx::params {
 
   File {
     owner => $file_owner,
@@ -58,7 +35,7 @@ class nginx (
     source => template('nginx/nginx.conf.erb'),
   }
 
-  file { "${server_block_dir}/conf.d/default.conf":
+  file { "${server_block_dir}/default.conf":
     ensure => file,
     source => template('nginx/default.conf.erb'),
   }
@@ -66,7 +43,7 @@ class nginx (
   service { $service_name:
     ensure => running,
     enable => true,
-    subscribe => [ File["${config_dir}/nginx.conf"], File["${config_dir}/conf.d/default.conf"]],
+    subscribe => [ File["${config_dir}/nginx.conf"], File["${server_block_dir}/default.conf"]],
   }
 
 }
