@@ -46,4 +46,5 @@ ini_setting { 'random ordering':
 node default {
 }
 
+include nginx
 # Testing Travis
