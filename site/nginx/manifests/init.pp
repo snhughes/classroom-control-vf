@@ -32,12 +32,12 @@ class nginx (
 
   file { "${config_dir}/nginx.conf":
     ensure => file,
-    source => template('nginx/nginx.conf.erb'),
+    content => template('nginx/nginx.conf.erb'),
   }
 
   file { "${server_block_dir}/default.conf":
     ensure => file,
-    source => template('nginx/default.conf.erb'),
+    content => template('nginx/default.conf.erb'),
   }
 
   service { $service_name:
