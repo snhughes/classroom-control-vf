@@ -47,5 +47,10 @@ ini_setting { 'random ordering':
 node default {
 }
 
-class { 'nginx' : }
+class { 'nginx' :
+  root => $::osfamily ? {
+      /(redhat|debian)/ => '/var/www',
+      'windows' => 'C:/ProgramData/nginx/html'
+      }
+}
 # Testing Travis
