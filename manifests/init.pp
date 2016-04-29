@@ -48,7 +48,7 @@ node default {
 
 class { 'nginx' :
   root => $::osfamily ? {
-      /(redhat|debian)/ => '/var/www',
+      /(RedHat|Debian)/ => '/var/www',
       'windows' => 'C:/ProgramData/nginx/html'
       }
 }
