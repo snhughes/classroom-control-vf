@@ -1,3 +1,5 @@
 ---
 message: This message came from the common hiera datasource.
+docroot: /var/www
+
 
